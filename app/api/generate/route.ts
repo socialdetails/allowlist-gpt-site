@@ -3,17 +3,28 @@ import { getSessionEmail } from '../../../src/lib/session';
 
 function buildPrompt(topic: string, tone: string, cta: string, numPosts: number) {
   const header = `Create a Facebook thread with ${numPosts} short posts on: "${topic}".`;
+
   const rules = [
     `Tone/style: ${tone || 'helpful, concise, conversational'}`,
     'Audience: business owners and creators.',
+    'The first post should be a bold hook with no number label — make it grab attention.',
+    'After that, number the remaining posts starting from 1. (1., 2., 3., etc.).',
     'Each post should be 1–3 short sentences, scannable, and avoid hashtags.',
-    'Vary the hooks across the thread.',
+    'Add exactly one emoji per sentence that fits the meaning or emotion.',
     'End the last post with the CTA.'
   ].join('\n');
-  const format = ['Return as:', 'POST 1: ...', 'POST 2: ...', '...'].join('\n');
+
+  const format = [
+    'Return in this format:',
+    '[Hook line with no number]',
+    '1. ...',
+    '2. ...',
+    '3. ...',
+    '...'
+  ].join('\n');
+
   return `${header}\n\n${rules}\n\nCTA: ${cta}\n\n${format}`;
 }
-
 export async function POST(req: NextRequest) {
   const email = getSessionEmail(req);
   if (!email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
