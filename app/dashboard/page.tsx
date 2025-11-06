@@ -36,7 +36,6 @@ export default function Dashboard() {
       </form>
     </div>
     {output && (<div style={{ padding:'1.5rem', background:'#0e1433', borderRadius:16, marginTop:16, whiteSpace:'pre-wrap' }}>
-      <h3 style={{ marginTop:0 }}>Result</h3>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
   <h3 style={{ marginTop: 0 }}>Result</h3>
   <button
