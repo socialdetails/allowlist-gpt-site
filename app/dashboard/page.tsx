@@ -15,11 +15,11 @@ export default function Dashboard() {
     setOutput(data?.error ? ('Error: ' + data.error) : (data.text || ''));
   }
   return (<main>
-    <div style={{ padding:'1.5rem', background:'#121832', borderRadius:16 }}>
-      <h2 style={{ margin:0, marginBottom:12 }}>🧵 Facebook Thread Builder</h2>
+    <div style={{ padding:'1.5rem', background:'#11152B', borderRadius:16 }}>
+      <h2 style={{ margin:0, marginBottom:12 }}>🧵 Facebook Text Thread Generator </h2>
       <form onSubmit={generate} style={{ display:'grid', gap:12 }}>
         <label style={{ display:'grid', gap:6 }}><span>Topic</span>
-          <input value={topic} onChange={e=>setTopic(e.target.value)} required placeholder="e.g., Short-form video tips for realtors"
+          <input value={topic} onChange={e=>setTopic(e.target.value)} required placeholder="e.g., Ways to be more productive"
             style={{ padding:'12px 14px', borderRadius:12, border:'1px solid #2a335c', background:'#0c1230', color:'#fff' }} /></label>
         <label style={{ display:'grid', gap:6 }}><span>Tone/Style</span>
           <input value={tone} onChange={e=>setTone(e.target.value)}
