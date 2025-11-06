@@ -7,6 +7,7 @@ export default function Dashboard() {
   const [numPosts, setNumPosts] = useState(5);
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState('');
+  const [copied, setCopied] = useState(false);
   async function generate(e: React.FormEvent) {
     e.preventDefault(); setLoading(true); setOutput('');
     const res = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ topic, tone, cta, numPosts }) });
@@ -36,6 +37,30 @@ export default function Dashboard() {
     </div>
     {output && (<div style={{ padding:'1.5rem', background:'#0e1433', borderRadius:16, marginTop:16, whiteSpace:'pre-wrap' }}>
       <h3 style={{ marginTop:0 }}>Result</h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+  <h3 style={{ marginTop: 0 }}>Result</h3>
+  <button
+    onClick={async () => {
+      try {
+        await navigator.clipboard.writeText(output);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      } catch {}
+    }}
+    style={{
+      padding: '8px 12px',
+      borderRadius: 10,
+      border: '1px solid #243056',
+      background: copied ? '#3044A3' : '#2B3B8C',
+      color: 'white',
+      cursor: 'pointer',
+      fontSize: 13
+    }}
+    aria-label="Copy the generated thread to clipboard"
+  >
+    {copied ? 'Copied!' : 'Copy Thread'}
+  </button>
+</div>
       <pre style={{ whiteSpace:'pre-wrap', fontFamily:'ui-monospace, Menlo, monospace' }}>{output}</pre>
     </div>)}
   </main>);
