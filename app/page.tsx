@@ -17,7 +17,7 @@ export default function Page() {
     }
   }
   return (<main>
-    <div style={{ padding:'2rem', background:'#121832', borderRadius:16 }}>
+    <div style={{ padding:'2rem', background:'#11152B', borderRadius:16 }}>
       <h2 style={{ margin:0, marginBottom:12 }}>Welcome</h2>
       <p style={{ marginTop:0, opacity:0.75 }}>Enter your email to continue.</p>
       <form onSubmit={onSubmit} style={{ display:'flex', gap:8 }}>
