@@ -12,11 +12,12 @@ export default function QuoteBuilder() {
     e.preventDefault();
     setLoading(true);
     setOutput('');
-    const res = await fetch('/api/generate-quote', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ topic, num })
-    });
+   const res = await fetch('/quote-builder/api/generate', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ topic, num })
+});
+
     const data = await res.json();
     setLoading(false);
     setOutput(data?.text || data?.error || '');
