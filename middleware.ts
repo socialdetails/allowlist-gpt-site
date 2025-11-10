@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAllowed } from './src/lib/allowlist';
 
+// edge-safe cookie reader (no Node crypto)
 function base64UrlToString(b64url: string) {
   const b64 = b64url.replace(/-/g, '+').replace(/_/g, '/');
   const pad = (4 - (b64.length % 4)) % 4;
@@ -14,8 +15,8 @@ function readSessionEmailEdge(req: NextRequest): string | null {
   const [b64url] = raw.split('.');
   if (!b64url) return null;
   try {
-    const json = JSON.parse(base64UrlToString(b64url));
-    return typeof json?.email === 'string' ? json.email : null;
+    const obj = JSON.parse(base64UrlToString(b64url));
+    return typeof obj?.email === 'string' ? obj.email : null;
   } catch {
     return null;
   }
@@ -24,12 +25,12 @@ function readSessionEmailEdge(req: NextRequest): string | null {
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
- 
+  // allow the quote-builder API to run
   if (url.pathname.startsWith('/quote-builder/api')) {
     return NextResponse.next();
   }
 
- 
+  // protect dashboard + quote-builder pages
   const needsAuth =
     url.pathname.startsWith('/dashboard') ||
     url.pathname.startsWith('/quote-builder');
@@ -47,8 +48,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/dashboard/:path*',
-    '/quote-builder/:path*'
-  ]
+  matcher: ['/dashboard/:path*', '/quote-builder/:path*']
 };
