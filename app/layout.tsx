@@ -8,7 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <h1 style={{ fontSize: 18, opacity: 0.9, margin: 0 }}>ThreadForge</h1>
         </div>
         <a href="/" style={{ fontSize: 14, opacity: 0.7 }}>Home</a>
-      </header>
+      </header> <a href="/fb-text-quote" style={{ fontSize: 14, opacity: 0.7 }}>FB Text Quote</a>
       {children}
     </div>
   </body></html>);
